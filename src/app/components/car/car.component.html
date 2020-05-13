@@ -1,0 +1,43 @@
+<div *ngIf="car$ | async as car">
+  <div class="filler"></div>
+  <mat-card class="car mat-elevation-z4">
+    <mat-card-header>
+      <mat-card-title>
+        {{ car.year }} {{ car.make }} {{ car.model }}
+      </mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="car.image" />
+    <mat-card-content>
+      <mat-slide-toggle
+        color="primary"
+        [checked]="system === 'Metric'"
+        (change)="changeSystem($event)">
+        {{ system }}
+      </mat-slide-toggle>
+      <app-numeric-spec
+        label="Top Speed"
+        system="{{ system }}"
+        measurement="distance"
+        value="{{ car.specs.performance.top_speed_mph }}"
+        imperialUnit="mph"
+        metricUnit="km/h">
+      </app-numeric-spec>
+      <app-numeric-spec
+        label="Power"
+        system="{{ system }}"
+        measurement="power"
+        value="{{ car.specs.performance.horsepower }}"
+        imperialUnit="hp"
+        metricUnit="kW">
+      </app-numeric-spec>
+      <app-numeric-spec
+        label="Torque"
+        system="{{ system }}"
+        measurement="torque"
+        value="{{ car.specs.performance.torque_lb_ft }}"
+        imperialUnit="lb-ft"
+        metricUnit="Nm">
+      </app-numeric-spec>
+    </mat-card-content>
+  </mat-card>
+</div>

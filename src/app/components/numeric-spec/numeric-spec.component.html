@@ -1,0 +1,12 @@
+<div>
+  {{label}}:
+  <span>
+    {{value | unit : system : measurement}}
+  </span>
+  <ng-container *ngIf="system === 'Imperial'; else metric">
+    {{imperialUnit}}
+  </ng-container>
+  <ng-template #metric>
+    {{metricUnit}}
+  </ng-template>
+</div>

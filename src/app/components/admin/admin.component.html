@@ -1,0 +1,68 @@
+<div class="container">
+  <h1>Add Car</h1>
+  <div class="row" *ngIf="submitSuccess">Successfully Created {{submittedMake}} {{submittedModel}}</div>
+  <form [formGroup]="carForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
+    <h4>Basic Information</h4>
+    <div class="row">
+      <mat-form-field class="col">
+        <mat-label>Make</mat-label>
+        <input matInput formControlName="make" required />
+        <mat-error *ngIf="carForm.controls.make?.invalid">
+          You must enter a make
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Model</mat-label>
+        <input matInput formControlName="model" required />
+        <mat-error *ngIf="carForm.controls.model?.invalid">
+          You must enter a model
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Year</mat-label>
+        <input matInput formControlName="year" required/>
+        <mat-error *ngIf="carForm.controls.year?.invalid">
+          You must enter a valid year
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="col">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country" required/>
+        <mat-error *ngIf="carForm.controls.country?.invalid">
+          You must enter a country
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <h4>Weekend Categories</h4>
+    <div class="row">
+      <div class="col" *ngFor="let category of weekend_categories">
+        <mat-form-field>
+          <mat-label>{{category | header}}</mat-label>
+          <mat-select formControlName="{{category}}">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let rating of getRatingRange()" [value]="rating">
+              {{rating}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please select a score</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <h4>Daily Categories</h4>
+    <div class="row">
+      <div class="col" *ngFor="let category of daily_categories">
+        <mat-form-field>
+          <mat-label>{{category | header}}</mat-label>
+          <mat-select formControlName="{{category}}">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let rating of getRatingRange()" [value]="rating">
+              {{rating}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please select a score</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!carForm.valid">Submit</button> 
+  </form>
+</div>
