@@ -1,0 +1,19 @@
+.navbar {
+  overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  z-index: 2;
+}
+
+.home_link {
+  cursor: pointer;
+}
+
+mat-icon {
+  padding-left: 10px;
+}
+
+.main {
+  margin-top: 70px;
+}
