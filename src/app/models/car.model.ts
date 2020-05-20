@@ -89,3 +89,62 @@ export interface Transmission {
 export type TransmissionType = 'Automatic' | 'Manual' | 'Dual Clutch';
 
 export type DriveType = 'RWD' | 'FWD' | 'AWD' | '4WD' | '6WD';
+
+export const weekendCategories = [
+  'styling',
+  'acceleration',
+  'handling',
+  'fun_factor',
+  'cool_factor',
+];
+export const dailyCategories = [
+  'features',
+  'comfort',
+  'quality',
+  'practicality',
+  'value',
+];
+
+export const engineTypes = [
+  'I2',
+  'I3',
+  'I4',
+  'I5',
+  'I6',
+  'V4',
+  'V6',
+  'V8',
+  'V10',
+  'V12',
+  'F4',
+  'F6',
+  'W8',
+  'W12',
+  'W16',
+  'Rotary',
+  'Electric',
+];
+
+export const engineLayouts = ['Front', 'Mid', 'Rear', 'Axle'];
+
+export const aspirationTypes = [
+  'Naturally Aspirated',
+  'Turbo',
+  'Twin Turbo',
+  'Quad Turbo',
+  'Supercharged',
+  'Not Applicable',
+];
+
+export const fuelTypes = [
+  'Gasoline',
+  'Diesel',
+  'Electric',
+  'Gas Hybrid',
+  'Diesel Hyprid',
+  'Flex Fuel',
+];
+
+export const transmissionTypes = ['Automatic', 'Manual', 'Dual Clutch'];
+
+export const driveTypes = ['RWD', 'FWD', 'AWD', '4WD', '6WD'];

@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
-import { CarsService } from '../../services/cars.service';
+import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { CarInput } from '../../models/car-input.model';
+import {
+  aspirationTypes,
+  dailyCategories,
+  driveTypes,
+  engineLayouts,
+  engineTypes,
+  fuelTypes,
+  transmissionTypes,
+  weekendCategories,
+} from '../../models/car.model';
+import { CarsService } from '../../services/cars.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,6 +23,15 @@ export class AdminComponent implements OnInit {
   submitError: boolean;
   submittedMake: string;
   submittedModel: string;
+
+  weekendCategories: string[];
+  dailyCategories: string[];
+  engineTypes: string[];
+  engineLayouts: string[];
+  aspirationTypes: string[];
+  fuelTypes: string[];
+  transmissionTypes: string[];
+  driveTypes: string[];
 
   carForm = this.fb.group({
     make: ['', Validators.required],
@@ -35,22 +54,27 @@ export class AdminComponent implements OnInit {
     quality: ['', Validators.required],
     practicality: ['', Validators.required],
     value: ['', Validators.required],
+    specs: this.fb.group({
+      performance: this.fb.group({
+        zero_to_sixty_mph: ['', Validators.pattern(/^\d{0,3}(\.\d+)?$/)],
+        top_speed_mph: ['', Validators.pattern(/^\d{0,3}$/)],
+        horsepower: ['', Validators.pattern(/^\d{0,4}$/)],
+        torque_lb_ft: ['', Validators.pattern(/^\d{0,4}$/)],
+      }),
+      engine: this.fb.group({
+        type: [''],
+        layout: [''],
+        displacement_liters: ['', Validators.pattern(/^\d{0,2}(\.\d+)?$/)],
+        aspiration: [''],
+        fuel: [''],
+      }),
+      transmission: this.fb.group({
+        type: [''],
+        gears: ['', Validators.pattern(/^\d{0,4}$/)],
+      }),
+      drive_type: [''],
+    }),
   });
-
-  weekend_categories: string[] = [
-    'styling',
-    'acceleration',
-    'handling',
-    'fun_factor',
-    'cool_factor'
-  ];
-  daily_categories: string[] = [
-    'features',
-    'comfort',
-    'quality',
-    'practicality',
-    'value'
-  ];
 
   constructor(private fb: FormBuilder, private carsService: CarsService) {}
 
@@ -59,6 +83,15 @@ export class AdminComponent implements OnInit {
     this.submitError = false;
     this.submittedMake = '';
     this.submittedModel = '';
+
+    this.weekendCategories = weekendCategories;
+    this.dailyCategories = dailyCategories;
+    this.engineTypes = engineTypes;
+    this.engineLayouts = engineLayouts;
+    this.aspirationTypes = aspirationTypes;
+    this.fuelTypes = fuelTypes;
+    this.transmissionTypes = transmissionTypes;
+    this.driveTypes = driveTypes;
   }
 
   public getRatingRange(): number[] {
@@ -67,18 +100,19 @@ export class AdminComponent implements OnInit {
 
   onSubmit(formDirective: FormGroupDirective) {
     console.warn(this.carForm.value);
-    this.carsService.createCar(this.carForm.value as CarInput).subscribe(response => {
-      this.submitSuccess = true;
-      this.submittedMake = this.carForm.value.make;
-      this.submittedModel = this.carForm.value.model;
-      formDirective.resetForm();
-      this.carForm.reset();
-      console.log(response);
-
-    },
-    error => {
-      this.submitError = true;
-      console.log(error);
-    });
+    this.carsService.createCar(this.carForm.value as CarInput).subscribe(
+      (response) => {
+        this.submitSuccess = true;
+        this.submittedMake = this.carForm.value.make;
+        this.submittedModel = this.carForm.value.model;
+        formDirective.resetForm();
+        this.carForm.reset();
+        console.log(response);
+      },
+      (error) => {
+        this.submitError = true;
+        console.log(error);
+      }
+    );
   }
 }

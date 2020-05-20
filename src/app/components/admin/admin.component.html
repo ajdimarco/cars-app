@@ -4,28 +4,28 @@
   <form [formGroup]="carForm" #formDirective="ngForm" (ngSubmit)="onSubmit(formDirective)">
     <h4>Basic Information</h4>
     <div class="row">
-      <mat-form-field class="col">
+      <mat-form-field class="col-sm-6 col-md">
         <mat-label>Make</mat-label>
         <input matInput formControlName="make" required />
         <mat-error *ngIf="carForm.controls.make?.invalid">
           You must enter a make
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col">
+      <mat-form-field class="col-sm-6 col-md">
         <mat-label>Model</mat-label>
         <input matInput formControlName="model" required />
         <mat-error *ngIf="carForm.controls.model?.invalid">
           You must enter a model
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col">
+      <mat-form-field class="col-sm-6 col-md">
         <mat-label>Year</mat-label>
         <input matInput formControlName="year" required/>
         <mat-error *ngIf="carForm.controls.year?.invalid">
           You must enter a valid year
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="col">
+      <mat-form-field class="col-sm-6 col-md">
         <mat-label>Country</mat-label>
         <input matInput formControlName="country" required/>
         <mat-error *ngIf="carForm.controls.country?.invalid">
@@ -35,7 +35,7 @@
     </div>
     <h4>Weekend Categories</h4>
     <div class="row">
-      <div class="col" *ngFor="let category of weekend_categories">
+      <div class="col-md-4 col-lg" *ngFor="let category of weekendCategories">
         <mat-form-field>
           <mat-label>{{category | header}}</mat-label>
           <mat-select formControlName="{{category}}">
@@ -50,7 +50,7 @@
     </div>
     <h4>Daily Categories</h4>
     <div class="row">
-      <div class="col" *ngFor="let category of daily_categories">
+      <div class="col-md-4 col-lg" *ngFor="let category of dailyCategories">
         <mat-form-field>
           <mat-label>{{category | header}}</mat-label>
           <mat-select formControlName="{{category}}">
@@ -60,6 +60,117 @@
             </mat-option>
           </mat-select>
           <mat-error>Please select a score</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <h3>Specifications</h3>
+    <div formGroupName="specs">
+      <h4>Performance</h4>
+      <div class="row" formGroupName="performance">
+        <mat-form-field class="col-md-6 col-lg-2">
+          <mat-label>0-60 mph time (s)</mat-label>
+          <input matInput formControlName="zero_to_sixty_mph" />
+          <mat-error>
+            Enter a valid time
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-2">
+          <mat-label>Top Speed (mph)</mat-label>
+          <input matInput formControlName="top_speed_mph" />
+          <mat-error>
+            Enter a valid speed
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-2">
+          <mat-label>Power (hp)</mat-label>
+          <input matInput formControlName="horsepower" />
+          <mat-error>
+            Enter a valid horsepower
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-lg-2">
+          <mat-label>Torque (lb-ft)</mat-label>
+          <input matInput formControlName="torque_lb_ft" />
+          <mat-error>
+            Enter a valid torque
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <h4>Engine</h4>
+      <div class="row" formGroupName="engine">
+        <mat-form-field class="col-sm-6 col-md-4 col-lg">
+          <mat-label>Engine Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let engineType of engineTypes" [value]="engineType">
+              {{engineType}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-sm-6 col-md-4 col-lg">
+          <mat-label>Engine Layout</mat-label>
+          <mat-select formControlName="layout">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let engineLayout of engineLayouts" [value]="engineLayout">
+              {{engineLayout}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-sm-6 col-md-4 col-lg">
+          <mat-label>Aspiration</mat-label>
+          <mat-select formControlName="aspiration">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let aspirationType of aspirationTypes" [value]="aspirationType">
+              {{aspirationType}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-sm-6 col-md-4 col-lg">
+          <mat-label>Fuel Type</mat-label>
+          <mat-select formControlName="fuel">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let fuelType of fuelTypes" [value]="fuelType">
+              {{fuelType}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-sm-6 col-md-4 col-lg">
+          <mat-label>Displacement (L)</mat-label>
+          <input matInput formControlName="displacement_liters" />
+          <mat-error>
+            Enter a valid displacement
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <h4>Transmission</h4>
+      <div class="row" formGroupName="transmission">
+        <mat-form-field class="col-sm-6 col-md-4 col-lg-2">
+          <mat-label>Transmission Type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let transmissionType of transmissionTypes" [value]="transmissionType">
+              {{transmissionType}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-sm-6 col-md-3 col-lg-2">
+          <mat-label>Gears</mat-label>
+          <input matInput formControlName="gears" />
+          <mat-error>
+            Enter a valid number of gears
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <h4>Drive Type</h4>
+      <div class="row">
+        <mat-form-field class="col-sm-6 col-md-3 col-lg-2">
+          <mat-label>Drive Type</mat-label>
+          <mat-select formControlName="drive_type">
+            <mat-option>-</mat-option>
+            <mat-option *ngFor="let driveType of driveTypes" [value]="driveType">
+              {{driveType}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
