@@ -1,3 +1,40 @@
 h4 {
   padding-top: 10px;
 }
+
+button {
+  margin-bottom: 30px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.submit-status {
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#success {
+  border-color: green;
+  background-color: #87f18c;
+  color: green;
+}
+
+#failure {
+  border-color: #751b1b;
+  background-color: #ff7d7d;
+  color: #751b1b;
+}
+
+mat-icon {
+  cursor: pointer;
+}

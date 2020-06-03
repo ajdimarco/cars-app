@@ -7,7 +7,7 @@
       </mat-card-title>
     </mat-card-header>
     <img mat-card-image [src]="car.image" />
-    <mat-card-content>
+    <mat-card-content *ngIf="car?.specs">
       <mat-slide-toggle
         color="primary"
         [checked]="system === 'Metric'"

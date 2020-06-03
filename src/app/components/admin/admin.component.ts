@@ -21,6 +21,7 @@ import { CarsService } from '../../services/cars.service';
 export class AdminComponent implements OnInit {
   submitSuccess: boolean;
   submitError: boolean;
+  submitErrorMessages: string[];
   submittedMake: string;
   submittedModel: string;
 
@@ -40,7 +41,9 @@ export class AdminComponent implements OnInit {
       '',
       Validators.compose([
         Validators.required,
-        Validators.pattern(/^19\d{2}$|^20[012]\d$/),
+        Validators.min(1900),
+        Validators.max(2030),
+        Validators.pattern(/^\d+$/)
       ]),
     ],
     country: ['', Validators.required],
@@ -56,23 +59,41 @@ export class AdminComponent implements OnInit {
     value: ['', Validators.required],
     specs: this.fb.group({
       performance: this.fb.group({
-        zero_to_sixty_mph: ['', Validators.pattern(/^\d{0,3}(\.\d+)?$/)],
-        top_speed_mph: ['', Validators.pattern(/^\d{0,3}$/)],
-        horsepower: ['', Validators.pattern(/^\d{0,4}$/)],
-        torque_lb_ft: ['', Validators.pattern(/^\d{0,4}$/)],
+        zero_to_sixty_mph: [
+          undefined,
+          Validators.compose([Validators.min(0.01), Validators.max(100)]),
+        ],
+        top_speed_mph: [
+          undefined,
+          Validators.compose([Validators.min(0.01), Validators.max(330)]),
+        ],
+        horsepower: [
+          undefined,
+          Validators.compose([Validators.min(0.01), Validators.max(4000)]),
+        ],
+        torque_lb_ft: [
+          undefined,
+          Validators.compose([Validators.min(0.01), Validators.max(4000)]),
+        ],
       }),
       engine: this.fb.group({
-        type: [''],
-        layout: [''],
-        displacement_liters: ['', Validators.pattern(/^\d{0,2}(\.\d+)?$/)],
-        aspiration: [''],
-        fuel: [''],
+        type: [undefined],
+        layout: [undefined],
+        displacement_liters: [
+          undefined,
+          Validators.compose([Validators.min(0), Validators.max(20)]),
+        ],
+        aspiration: [undefined],
+        fuel: [undefined],
       }),
       transmission: this.fb.group({
-        type: [''],
-        gears: ['', Validators.pattern(/^\d{0,4}$/)],
+        type: [undefined],
+        gears: [
+          undefined,
+          Validators.compose([Validators.min(1), Validators.max(20), Validators.pattern(/^\d+$/)]),
+        ],
       }),
-      drive_type: [''],
+      drive_type: [undefined],
     }),
   });
 
@@ -99,6 +120,8 @@ export class AdminComponent implements OnInit {
   }
 
   onSubmit(formDirective: FormGroupDirective) {
+    this.submitSuccess = false;
+    this.submitError = false;
     console.warn(this.carForm.value);
     this.carsService.createCar(this.carForm.value as CarInput).subscribe(
       (response) => {
@@ -111,7 +134,7 @@ export class AdminComponent implements OnInit {
       },
       (error) => {
         this.submitError = true;
-        console.log(error);
+        console.log(error?.error?.message);
       }
     );
   }
